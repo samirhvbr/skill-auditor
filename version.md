@@ -1,6 +1,6 @@
 # Versão — AUDITOR
 
-**Versão atual:** `0.3.4`
+**Versão atual:** `0.3.5`
 
 > Este arquivo é a **fonte da verdade** da versão do projeto. Qualquer lugar que
 > precise exibir ou reportar a versão (skill, CLI, relatório de ciclo, pacote de
@@ -89,6 +89,19 @@ entrega). Commits adicionais da mesma entrega repetem a versão sem novo bump.
 
 > Ordem decrescente (mais recente no topo). Cada entrada lista as mudanças e os
 > gatilhos que justificaram o bump.
+
+### `0.3.5` — 2026-09-02 — Agent doc: Releases rule and the English-only language rule
+
+Marked echo of the single source at samirhvbr/repodocs. Two rules land here:
+
+1. The `version.md` of the default branch ON GITHUB is what the GitHub Releases
+   show, and a commit that bumps it is not finished until that version has a
+   tag, a Release and the `Latest` badge — same push, not "later".
+2. Everything in this repository is English (US): documents, commit messages,
+   pull requests, issues, code comments. The only carve-out is end-user-facing
+   product strings. History is not rewritten.
+
+Delimited by a marker, so re-running replaces instead of duplicating.
 
 ### `0.3.4` — 2026-09-02 — Regra de Releases no doc de agente: bump e Release sao um ato so
 
