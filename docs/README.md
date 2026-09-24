@@ -1,58 +1,59 @@
-# Documentação técnica — AUDITOR
+# Technical documentation — AUDITOR
 
-Índice de `docs/`. Documentação **durável** mora aqui; notas de trabalho, escopo e
-estado moram em [`.continue/`](../.continue/); o contrato do comando/configuração
-mora em [`SPEC.md`](../SPEC.md) na raiz; o prompt de runtime do produto mora em
-[`prompts/`](../prompts/).
+Index of `docs/`. **Durable** documentation lives here; working notes, scope and
+state live in [`.continue/`](../.continue/); the command/configuration contract
+lives in [`SPEC.md`](../SPEC.md) at the root; the product's runtime prompt lives
+in [`prompts/`](../prompts/).
 
-> ⚠️ O projeto está em **fase de proposta**. Não há implementação. O que estiver
-> marcado como esqueleto ou pendente é exatamente isso — não trate como decidido.
-
----
-
-## Nesta pasta
-
-| Arquivo | O que é |
-|---|---|
-| [decisoes.md](decisoes.md) | **ADRs.** ADR-001 a ADR-009 (decisões fechadas) + tabela das 11 pendências abertas. Decisão nova entra aqui. |
-| [revisao-inicial.md](revisao-inicial.md) | **Revisão de 2026-07-28.** 23 achados sobre a proposta, com a situação de cada um. Leitura recomendada antes de propor arquitetura. |
-| [contrato-subagente.md](contrato-subagente.md) | **Parcial.** Especificação do contrato de entrada/saída do subagente, formato de achado, catálogo de modelos e adaptadores. |
-
-## Fora desta pasta
-
-| Arquivo | O que é |
-|---|---|
-| [../README.md](../README.md) | Proposta do produto: objetivo, escopo da v1, estrutura de `.auditor/`, fluxo de ciclo. |
-| [../SPEC.md](../SPEC.md) | **Parcial.** Sintaxe canônica do comando e esquema de `config.yml` / `state.json`. |
-| [../prompts/auditor-system.md](../prompts/auditor-system.md) | **Prompt de runtime** do subagente — o que a plataforma carrega ao executar a skill. Artefato do produto. |
-| [../SECURITY.md](../SECURITY.md) | Modelo de ameaça (T-01 a T-08) e política do repositório. **Leitura obrigatória.** |
-| [../version.md](../version.md) | Fonte de verdade da versão, gatilhos de bump e formato de commit. |
-| [../CLAUDE.md](../CLAUDE.md) / [../AGENTS.md](../AGENTS.md) | Regras para quem **desenvolve** este repositório. Espelhados — editar os dois. |
-| [../skill/README.md](../skill/README.md) | A skill para Claude Code: instalação, o que o gate garante e o que não garante. |
-| [../schemas/](../schemas/) | JSON Schema de `config.yml`, `state.json` e da saída do ciclo. |
-| [../tests/](../tests/) | 43 testes, sem dependência externa. `python3 -m unittest discover -s tests` |
-| [../.continue/escopo-projeto.md](../.continue/escopo-projeto.md) | Fases F0–F6 — **proposta**, aguarda aprovação. |
-| [../.continue/estado-atual.md](../.continue/estado-atual.md) | Onde o projeto está e o que vem a seguir. |
-| [../.claude/README.md](../.claude/README.md) | Perfil de modelo e postura de permissões. |
+> ⚠️ The project is in the **proposal phase**. There is no implementation. Whatever
+> is marked as a skeleton or pending is exactly that — do not treat it as decided.
 
 ---
 
-## Por onde começar
+## In this folder
 
-- **Entender o produto** → `../README.md`, depois `decisoes.md`.
-- **Vai propor arquitetura** → `revisao-inicial.md` primeiro. Os achados abertos já
-  cobrem boa parte das armadilhas, e A-13 pode mudar o desenho inteiro.
-- **Vai editar um arquivo de agente** → confira o alvo. `CLAUDE.md` + `AGENTS.md`
-  (raiz, espelhados) são do **repositório**; `prompts/auditor-system.md` e
-  `contrato-subagente.md` são do **produto**. Tabela em `../CLAUDE.md` (ADR-007).
-- **Vai mexer em escrita, PR/issue ou scheduler** → `../SECURITY.md`, obrigatório.
-- **Vai entregar** → `../version.md` (bump + changelog + formato de commit).
+| File | What it is |
+|---|---|
+| [decisoes.md](decisoes.md) | **ADRs.** ADR-001 to ADR-009 (closed decisions) + the table of the 11 open pendencies. A new decision goes in here. |
+| [revisao-inicial.md](revisao-inicial.md) | **Review of 2026-07-28.** 23 findings about the proposal, each with its status. Recommended reading before proposing architecture. |
+| [contrato-subagente.md](contrato-subagente.md) | **Partial.** Specification of the subagent's input/output contract, finding format, model catalog and adapters. |
 
-## Convenções
+## Outside this folder
 
-- Documentação deste repositório em **PT-BR**. Artefatos que o AUDITOR produz nos
-  repos auditados em **en-US** (ver `../CLAUDE.md`).
-- Documento novo aqui entra **neste índice** no mesmo commit.
-- Sem link para arquivo inexistente: se é futuro, diga em texto, sem link.
-- Distinga **fato observado**, **inferência** e **recomendação** — a mesma regra que
-  o AUDITOR impõe aos repositórios que audita.
+| File | What it is |
+|---|---|
+| [../README.md](../README.md) | The product proposal: goal, v1 scope, structure of `.auditor/`, cycle flow. |
+| [../SPEC.md](../SPEC.md) | **Partial.** Canonical command syntax and the `config.yml` / `state.json` schema. |
+| [../prompts/auditor-system.md](../prompts/auditor-system.md) | The subagent's **runtime prompt** — what the platform loads when it runs the skill. A product artifact. |
+| [../SECURITY.md](../SECURITY.md) | Threat model (T-01 to T-08) and repository policy. **Required reading.** |
+| [../version.md](../version.md) | Source of truth for the version, bump triggers and commit format. |
+| [../CLAUDE.md](../CLAUDE.md) / [../AGENTS.md](../AGENTS.md) | Rules for whoever **develops** this repository. Mirrored — edit both. |
+| [../skill/README.md](../skill/README.md) | The skill for Claude Code: installation, what the gate guarantees and what it does not. |
+| [../schemas/](../schemas/) | JSON Schema for `config.yml`, `state.json` and the cycle output. |
+| [../tests/](../tests/) | 43 tests, no external dependency. `python3 -m unittest discover -s tests` |
+| [../.continue/escopo-projeto.md](../.continue/escopo-projeto.md) | Phases F0–F6 — a **proposal**, awaiting approval. |
+| [../.continue/estado-atual.md](../.continue/estado-atual.md) | Where the project is and what comes next. |
+| [../.claude/README.md](../.claude/README.md) | Effort level and permissions posture. The repository chooses no model — that is the user's call, with `/model` (repodocs ADR-027). |
+
+---
+
+## Where to start
+
+- **Understand the product** → `../README.md`, then `decisoes.md`.
+- **Going to propose architecture** → `revisao-inicial.md` first. The open findings
+  already cover most of the traps, and A-13 may change the whole design.
+- **Going to edit an agent file** → check the target. `CLAUDE.md` + `AGENTS.md`
+  (root, mirrored) belong to the **repository**; `prompts/auditor-system.md` and
+  `contrato-subagente.md` belong to the **product**. Table in `../CLAUDE.md` (ADR-007).
+- **Going to touch writing, PR/issue or the scheduler** → `../SECURITY.md`, required.
+- **Going to deliver** → `../version.md` (bump + changelog + commit format).
+
+## Conventions
+
+- This repository's documentation is in **PT-BR**. Artifacts AUDITOR produces in
+  the audited repos are in **en-US** (see `../CLAUDE.md`).
+- A new document here goes **into this index** in the same commit.
+- No link to a file that does not exist: if it is future work, say so in prose,
+  without a link.
+- Distinguish **observed fact**, **inference** and **recommendation** — the same
+  rule AUDITOR imposes on the repositories it audits.

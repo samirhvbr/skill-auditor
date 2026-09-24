@@ -1,63 +1,70 @@
-# Perfil de modelo Claude Code — AUDITOR
+# Claude Code settings — AUDITOR
 
-`.claude/` deste projeto segue o padrão dos repos Blue3/samirhvbr: **perfil de
-modelo + postura de permissões**. Hoje o repositório é só documentação — nenhuma
-stack de execução foi decidida (ver `docs/decisoes.md` §Pendentes), então a
-allow-list é deliberadamente enxuta.
+This project's `.claude/` follows the Blue3/samirhvbr house pattern: **effort
+level + permissions posture**. Today the repository is documentation only — no
+execution stack has been decided (see `docs/decisoes.md` §Pendentes), so the
+allow-list is deliberately lean.
 
-## Arquivos
+## Files
 
-| Arquivo | Papel |
+| File | Role |
 |---------|-------|
-| `settings.json` | Perfil **ativo** (versionado). Opus-only, `defaultMode: plan`, allow-list mínima + deny-list de segurança. |
-| `README.md` | Este arquivo. |
+| `settings.json` | The **active** profile (versioned). `defaultMode: plan`, minimal allow-list + safety deny-list. It chooses no model. |
+| `README.md` | This file. |
 
-Nada de `settings.local.json` versionado — ele está no `.gitignore` de propósito
-(padrão da casa desde o sweep de 25/07/2026).
+No versioned `settings.local.json` — it is in `.gitignore` on purpose (house
+standard since the sweep of 25/07/2026).
 
-## Perfil ativo
+## The model is the user's choice, not this repository's
+
+**Nothing here chooses the model** (repodocs ADR-027). `settings.json` carries no
+`model` and no `fallbackModel`, and its `env` steers none: no `ANTHROPIC_MODEL`,
+no `ANTHROPIC_DEFAULT_*_MODEL`, no `CLAUDE_CODE_SUBAGENT_MODEL`. There are no
+stand-by profiles to copy over `settings.json` either.
+
+- The model is chosen per session, by the user, with **`/model`**.
+- A **subagent inherits the session's model**.
+- Every pin this repository used to carry outlived the model it named: `opus[1m]`
+  was a version pin wearing a window suffix — the 1M variant existed only for the
+  previous Opus — and `CLAUDE_CODE_SUBAGENT_MODEL: opus` kept sending subagents
+  to an older model than the session's.
+
+## Active profile
 
 ```jsonc
-"model": "opus[1m]",        // Opus 5, janela de 1M explícita pelo sufixo
 "effortLevel": "xhigh",
-"env": {
-  "CLAUDE_CODE_SUBAGENT_MODEL": "opus",
-  "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-5"
-}
 ```
 
-## Regras que valem lembrar
+## Rules worth remembering
 
-- **Não adicionar `CLAUDE_CODE_DISABLE_1M_CONTEXT`** aqui — é justamente essa
-  variável que derruba a janela para 200K.
-- **Effort `max` vai por sessão** (`/effort max` ou `CLAUDE_CODE_EFFORT_LEVEL=max`
-  no ambiente). O campo `effortLevel` do JSON só aceita `low`/`medium`/`high`/
-  `xhigh`; `max` ali é ignorado.
-- `defaultMode: plan` é intencional: neste repo o custo de uma decisão escrita
-  errada é alto (documento normativo vira comportamento do agente depois).
+- **Effort `max` goes per session** (`/effort max` or `CLAUDE_CODE_EFFORT_LEVEL=max`
+  in the environment). The JSON `effortLevel` field only accepts `low`/`medium`/
+  `high`/`xhigh`; `max` there is ignored.
+- `defaultMode: plan` is intentional: in this repo the cost of a wrongly written
+  decision is high (a normative document becomes agent behavior later).
 
-## Postura de permissões
+## Permissions posture
 
-**Allow** — só o que é seguro e repetitivo: leitura/escrita de arquivo, git de
-inspeção, git de entrega (`add`/`commit`/`push`) e validadores de formato.
+**Allow** — only what is safe and repetitive: reading/writing files, inspection
+git, delivery git (`add`/`commit`/`push`) and format validators.
 
-**Ask** — tudo que muda a máquina ou fala com o mundo: `sudo`, `crontab`,
-`systemctl`, instalação de dependência e `gh pr/issue create`.
+**Ask** — everything that changes the machine or talks to the world: `sudo`,
+`crontab`, `systemctl`, dependency installation and `gh pr/issue create`.
 
-> `crontab` e `systemctl` estão em `ask` **de propósito**: o próprio produto que
-> este repo especifica instala gatilhos de agendamento (T-04 do `SECURITY.md`).
-> Ninguém instala persistência aqui sem o Samir ver.
+> `crontab` and `systemctl` are in `ask` **on purpose**: the very product this
+> repo specifies installs scheduling triggers (T-04 of `SECURITY.md`). Nobody
+> installs persistence here without Samir seeing it.
 
-**Deny** — leitura de segredo, remoção destrutiva, `push --force`, `reset --hard`,
-reescrita de histórico e `curl|bash`.
+**Deny** — reading a secret, destructive removal, `push --force`, `reset --hard`,
+history rewriting and `curl|bash`.
 
-> `git filter-branch` / `filter-repo` estão negados porque o processo automático
-> de `~/x` faz `git pull --rebase` e **desfaz** reescrita de histórico no working
-> copy vivo — reescrever aqui só quebra o repo.
+> `git filter-branch` / `filter-repo` are denied because the automatic process of
+> `~/x` runs `git pull --rebase` and **undoes** a history rewrite in the live
+> working copy — rewriting here only breaks the repo.
 
-## Allow-list adicional (quando a stack fechar)
+## Additional allow-list (once the stack is settled)
 
-Cole em `permissions.allow` conforme o harness for definido:
+Paste into `permissions.allow` as the harness gets defined:
 
 ```jsonc
 // Python

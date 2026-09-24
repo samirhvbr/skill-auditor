@@ -1,6 +1,6 @@
 # Versão — AUDITOR
 
-**Versão atual:** `0.3.10`
+**Versão atual:** `0.3.11`
 
 > Este arquivo é a **fonte da verdade** da versão do projeto. Qualquer lugar que
 > precise exibir ou reportar a versão (skill, CLI, relatório de ciclo, pacote de
